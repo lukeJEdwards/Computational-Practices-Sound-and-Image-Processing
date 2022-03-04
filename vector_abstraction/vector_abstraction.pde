@@ -3,7 +3,6 @@
   rows & cols
   use noise for randomness
   with rotate translate the triangle
-
 */
 
 
@@ -12,45 +11,66 @@ int OFFSET = 50;
 
 int rows, cols;
 
+Cell[][] cells;
+
 void setup(){
   size(800, 500);
- 
-  noStroke(); 
+  
+  noStroke();
+  frameRate(12);
+  
+  PFont font = createFont("Montserrat.ttf", 32);
+  textFont(font);
+  textAlign(LEFT, TOP);
   
   cols = (width - OFFSET * 2) / TRIANGLE_SIZE;
   rows = (height - OFFSET * 2) / TRIANGLE_SIZE;
+  
+  cells = new Cell[cols][rows];
+  
+  for(int x = 0; x < cols; x++){
+    for(int y = 0; y < rows; y++){
+      cells[x][y] = new Cell((x * TRIANGLE_SIZE) + OFFSET, (y * TRIANGLE_SIZE) + OFFSET, x, y);
+    }
+  }
+  
 }
 
 void draw(){
   background(255);
   fill(75);
   
-  for(int x = 0; x < cols; x++){
-    for(int y = 0 ; y < rows; y++){
-      place_right_triangle((x * TRIANGLE_SIZE) + OFFSET, (y * TRIANGLE_SIZE) + OFFSET);
+  update_cell_n_pos();
+  
+  
+  for(Cell[] col: cells){
+    for (Cell cell: col){
+      cell.draw();
+    }
+  }
+}
+
+void update_cell_n_pos(){
+  direction dir = direction.none;
+  if(keyPressed){
+    if(key == 'w'){
+      dir = direction.up;
+    }
+    else if(key == 's'){
+      dir = direction.down;
+    }
+    else if(key == 'd'){
+      dir = direction.right;
+    }
+    else if(key == 'a'){
+      dir = direction.left;
     }
   }
   
-}
-
-void mouseClicked(){
-  noiseSeed(int(random(0, 255)));
-}
-
-void place_right_triangle(int x, int y){
-  pushMatrix();
-  translate(x,y);
-  int n = floor(noise(x, y) * 4);
-  if(n == 0){
-    rotate(PI/2);
-    translate(0, -TRIANGLE_SIZE);
-  }else if (n == 1){
-    rotate(PI);
-    translate(-TRIANGLE_SIZE, -TRIANGLE_SIZE);
-  }else if (n == 2){
-    rotate(3*PI/2);
-    translate(-TRIANGLE_SIZE, 0);
+  for(Cell[] col: cells){
+    for (Cell cell: col){
+      cell.move(dir);
+    }
   }
-  triangle(0, 0, TRIANGLE_SIZE, 0, 0, TRIANGLE_SIZE);
-  popMatrix();
+  
 }
