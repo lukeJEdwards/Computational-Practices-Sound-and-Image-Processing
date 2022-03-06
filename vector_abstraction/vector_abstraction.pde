@@ -3,8 +3,11 @@
   rows & cols
   use noise for randomness
   with rotate translate the triangle
+  
+  make svg from button click
+  have sliders to change colours
+  set noise seed
 */
-
 
 int TRIANGLE_SIZE = 25;
 int OFFSET = 50;
@@ -18,10 +21,6 @@ void setup(){
   
   noStroke();
   frameRate(12);
-  
-  PFont font = createFont("Montserrat.ttf", 32);
-  textFont(font);
-  textAlign(LEFT, TOP);
   
   cols = (width - OFFSET * 2) / TRIANGLE_SIZE;
   rows = (height - OFFSET * 2) / TRIANGLE_SIZE;
@@ -42,10 +41,19 @@ void draw(){
   
   update_cell_n_pos();
   
-  
   for(Cell[] col: cells){
     for (Cell cell: col){
       cell.draw();
+    }
+  }
+ 
+}
+
+void mouseClicked(){
+  noiseSeed(int(random(0, Integer.MAX_VALUE)));
+  for(Cell[] col: cells){
+    for (Cell cell: col){
+      cell.update_noise();
     }
   }
 }
@@ -67,9 +75,11 @@ void update_cell_n_pos(){
     }
   }
   
-  for(Cell[] col: cells){
-    for (Cell cell: col){
-      cell.move(dir);
+  if(dir != direction.none){
+    for(Cell[] col: cells){
+      for (Cell cell: col){
+        cell.move(dir);
+      }
     }
   }
   

@@ -11,11 +11,7 @@ class Cell{
     y = _y;
     n_x = _n_x;
     n_y = _n_y;
-    n = noise(_n_x, _n_y);
-    r = floor(n * 3) * PI/2;
-    
-    int scale = int(map(floor(n * 2), 0, 2, 0, 255)); 
-    c = color(scale, scale, scale);
+    update_noise();
   }
   
   void move(direction dir){
@@ -35,13 +31,15 @@ class Cell{
       case none:
         break;
     }
-    if(dir != direction.none){
-      n = noise(n_x, n_y);
-      r = floor(n * 3) * PI/2;
-      int scale = int(map(floor(n * 2), 0, 2, 0, 255)); 
-      c = color(scale, scale, scale);
-    }
+    update_noise();
   }
+  
+  void update_noise(){
+    n = noise(n_x, n_y);
+    r = floor(n * 3) * PI/2;
+    int scale = int(map(floor(n * 2), 0, 2, 0, 255)); 
+    c = color(scale, scale, scale);
+  }  
   
   void rotate_triangle(){
     rotate(r);
