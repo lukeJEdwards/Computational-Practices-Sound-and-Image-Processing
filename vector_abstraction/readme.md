@@ -20,3 +20,5 @@ For this project, I decided to look at Anni Albers and her textiles designs thro
 I first made a grid of right angle triangles to imitate the work then using the built-in noise function in processing generated the sudo randomness giving a new combonation of triangles to look at each time you ran the program. I then decided to connect that to a mouse click so the viewer could change it while it was running.
 
 After that I then had the idea to move the work though noise space making it seem like the piece was in it's own world. I did this by storing both the visual and noise space positions in different variables the using the **W, A, S, D** keys for movment. To change the noise seed **click the left mouse button**
+
+[P5js implemtation for quick view](https://openprocessing.org/sketch/1506907)
