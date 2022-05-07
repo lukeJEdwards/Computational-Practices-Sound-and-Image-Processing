@@ -2,31 +2,29 @@
 enum direction { none, up, down, left, right };
 
 class Cell{
-  int x, y, n_x, n_y;
+  PVector pos, n_pos;
   float n, r;
   color c;
   
-  Cell(int _x, int _y, int _n_x, int _n_y){
-    x = _x;
-    y = _y;
-    n_x = _n_x;
-    n_y = _n_y;
+  Cell(int x, int y, int n_x, int n_y){
+    pos = new PVector(x, y);
+    n_pos = new PVector(n_x, n_y);
     update_noise();
   }
   
   void move(direction dir){
     switch(dir){
       case up:
-        n_y--;
+        n_pos.y++;
         break;
       case down:
-        n_y++;
+        n_pos.y--;
         break;
       case right:
-        n_x++;
+        n_pos.x--;
         break;
       case left:
-        n_x--;
+        n_pos.x++;
         break;
       case none:
         break;
@@ -35,7 +33,7 @@ class Cell{
   }
   
   void update_noise(){
-    n = noise(n_x, n_y);
+    n = noise(n_pos.x, n_pos.y);
     r = floor(n * 3) * PI/2;
     int scale = int(map(floor(n * 2), 0, 2, 0, 255)); 
     c = color(scale, scale, scale);
@@ -55,7 +53,7 @@ class Cell{
   void draw(){
     pushMatrix();
     fill(c);
-    translate(x,y);
+    translate(pos.x, pos.y);
     rotate_triangle();
     triangle(0, 0, TRIANGLE_SIZE, 0, 0, TRIANGLE_SIZE);
     popMatrix();
