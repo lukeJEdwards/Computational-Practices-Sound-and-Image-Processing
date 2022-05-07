@@ -21,4 +21,4 @@ I first made a grid of right angle triangles to imitate the work then using the 
 
 After that I then had the idea to move the work though noise space making it seem like the piece was in it's own world. I did this by storing both the visual and noise space positions in different variables the using the **W, A, S, D** keys for movment. To change the noise seed **click the left mouse button**
 
-![vector_abstraction](https://github.com/lukeJEdwards/Computational-Practices-Sound-and-Image-Processing/tree/master/vector_abstraction/images/output.JPG)
+![vector_abstraction](https://github.com/lukeJEdwards/Computational-Practices-Sound-and-Image-Processing/blob/master/VectorAbstraction/images/output.JPG)
